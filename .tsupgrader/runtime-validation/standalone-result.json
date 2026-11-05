@@ -1,0 +1,172 @@
+{
+  "planHash": "2a503f0108036e06a5fe856053108b6940e3a07087c61b43b963166dea806c53",
+  "phase": "standalone",
+  "recordedAtUtc": "2026-11-05T10:44:42.8120527Z",
+  "retryCount": 0,
+  "resetBaseline": false,
+  "complete": true,
+  "result": {
+    "setupSucceeded": true,
+    "setupDurationMs": 0,
+    "setupFailureOutput": null,
+    "assertions": [
+      {
+        "name": "production-build",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "npm warn Unknown env config \u0022scripts-prepend-node-path\u0022. This will stop working in the next major version of npm. See \u0060npm help npmrc\u0060 for supported config options.\r\n\r\n\u003E numenera-character-studio@0.1.0 build\r\n\u003E next build\r\n\r\n\u25B2 Next.js 16.4.5 (Turbopack)\r\n- Environments: .env.local\r\n\u2713 Running next.config.ts took 82ms\r\n- Cache Components enabled\r\n- Partial Prefetching enabled\r\n\r\n  Creating an optimized production build ...\r\n\u2713 Compiled successfully in 1148ms\r\n  Running TypeScript ...\r\n  Finished TypeScript in 4.4s ...\r\n  Collecting page data using 7 workers ...\r\n  Generating static pages using 7 workers (0/6) ...\r\n  Generating static pages using 7 workers (1/6) \r\n  Generating static pages using 7 workers (2/6) \r\n  Generating static pages using 7 workers (4/6) \r\n\u2713 Generating static pages using 7 workers (6/6) in 1513ms\r\n  Finalizing page optimization ...\r\n\r\nRoute (app)\r\n\u250C \u25CB /\r\n\u251C \u25CB /_not-found\r\n\u251C \u0192 /api/google-sheets\r\n\u2514 \u0192 /api/site-access\r\n\r\n\r\n\u25CB  (Static)   prerendered as static content\r\n\u0192  (Dynamic)  server-rendered on demand\r\n\r\n",
+        "durationMs": 11769
+      },
+      {
+        "name": "lint",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "npm warn Unknown env config \u0022scripts-prepend-node-path\u0022. This will stop working in the next major version of npm. See \u0060npm help npmrc\u0060 for supported config options.\r\n\r\n\u003E numenera-character-studio@0.1.0 lint\r\n\u003E eslint\r\n\r\n",
+        "durationMs": 7788
+      },
+      {
+        "name": "tests-pass",
+        "kind": "process",
+        "verificationMethod": "test-results",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "npm warn Unknown env config \u0022scripts-prepend-node-path\u0022. This will stop working in the next major version of npm. See \u0060npm help npmrc\u0060 for supported config options.\r\n\r\n\u003E numenera-character-studio@0.1.0 test\r\n\u003E tsx --test lib/character.test.ts lib/google-sheets.test.ts lib/site-access.test.ts\r\n\r\n\u2714 \uC0C8 \uCE90\uB9AD\uD130\uB294 \uB8F0\uBD81 \uC218\uCE58\uB97C \uC9C0\uC5B4\uB0B4\uC9C0 \uC54A\uACE0 \uBE48 \uD480\uB85C \uC2DC\uC791\uD55C\uB2E4 (7.9638ms)\r\n\u2714 \uCE90\uB9AD\uD130 \uAC80\uC99D\uC740 \uD480 \uACBD\uACC4\uC640 \uD544\uC694\uD55C \uB370\uC774\uD130 \uD615\uC2DD\uC744 \uD655\uC778\uD55C\uB2E4 (0.6276ms)\r\n\u2714 \uC800\uC7A5\uC18C\uC640 \uB2E8\uC77C \uCE90\uB9AD\uD130 JSON\uC744 \uAC80\uC99D\uD574 \uBCF5\uC6D0\uD55C\uB2E4 (0.9301ms)\r\n\u2714 \uD50C\uB808\uC774\uC5B4 \uC774\uB984\uC744 \uC800\uC7A5\uD558\uACE0 \uC774\uC804 \uCE90\uB9AD\uD130 \uB370\uC774\uD130\uB294 \uBE48 \uC774\uB984\uC73C\uB85C \uBCF5\uC6D0\uD55C\uB2E4 (0.3655ms)\r\n\u2714 Google Sheets \uAC00\uC838\uC624\uAE30\uB294 \uCD5C\uC2E0 \uC218\uC815\uBCF8\uC744 \uBCD1\uD569\uD558\uACE0 \uB85C\uCEEC \uCD08\uC0C1\uD654\uB97C \uBCF4\uC874\uD55C\uB2E4 (4.6722ms)\r\n\u2714 Google Sheets \uAC00\uC838\uC624\uAE30\uB294 \uB354 \uC624\uB798\uB41C \uC2DC\uD2B8 \uB370\uC774\uD130\uB85C \uB85C\uCEEC \uC218\uC815\uC744 \uB36E\uC9C0 \uC54A\uB294\uB2E4 (0.2252ms)\r\n\u2714 Google Sheets \uAC00\uC838\uC624\uAE30\uB294 \uC774\uB984\uC774 \uAC19\uC740 \uB2E4\uB978 ID \uCE90\uB9AD\uD130\uB97C \uAC31\uC2E0\uD55C\uB2E4 (0.2393ms)\r\n\u2714 \uC0AC\uC774\uD2B8 \uC7A0\uAE08 \uC138\uC158\uC740 \uC11C\uBA85\uACFC \uB9CC\uB8CC \uC2DC\uAC04\uC744 \uAC80\uC99D\uD55C\uB2E4 (3.7218ms)\r\n\u2714 \uC0AC\uC774\uD2B8 \uC7A0\uAE08\uC740 \uBE44\uBC00\uBC88\uD638\uB97C \uC815\uD655\uD788 \uBE44\uAD50\uD558\uACE0 \uCFE0\uD0A4 \uD5E4\uB354\uC5D0\uC11C \uC138\uC158\uC744 \uCC3E\uB294\uB2E4 (0.3727ms)\r\n\u2714 \uC0AC\uC774\uD2B8 \uBE44\uBC00\uBC88\uD638\uB85C \uC138\uC158\uC744 \uC5F4\uACE0 \uC7A0\uAE00 \uC218 \uC788\uC73C\uBA70 \uC800\uC7A5 API\uB294 \uC138\uC158\uC744 \uC694\uAD6C\uD55C\uB2E4 (34.4728ms)\r\n\u2139 tests 10\r\n\u2139 suites 0\r\n\u2139 pass 10\r\n\u2139 fail 0\r\n\u2139 cancelled 0\r\n\u2139 skipped 0\r\n\u2139 todo 0\r\n\u2139 duration_ms 418.0158\r\n",
+        "durationMs": 1452,
+        "testResults": {
+          "testFramework": "unknown",
+          "runnerDetectedFrom": "none",
+          "testsTotal": 0,
+          "testsPassed": 0,
+          "testsFailed": 0,
+          "testsSkipped": 0,
+          "parseFailed": true
+        }
+      },
+      {
+        "name": "dev-server-home-200",
+        "kind": "http-probe",
+        "verificationMethod": "http-status",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": null,
+        "outputSample": "HTTP 200\n\u003C!DOCTYPE html\u003E\u003Chtml lang=\u0022ko\u0022\u003E\u003Chead\u003E\u003Cmeta charSet=\u0022utf-8\u0022/\u003E\u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1\u0022/\u003E\u003Clink rel=\u0022stylesheet\u0022 href=\u0022/_next/static/chunks/0js5zapjpxyu6.css\u0022 data-precedence=\u0022next\u0022/\u003E\u003Clink rel=\u0022preload\u0022 as=\u0022script\u0022 fetchPriority=\u0022low\u0022 href=\u0022/_next/static/chunks/0j1we3cwg31qe.js\u0022/\u003E\u003Cscript src=\u0022/_next/static/chunks/374e0i9_p69m6.js\u0022 async=\u0022\u0022\u003E\u003C/script\u003E\u003Cscript src=\u0022/_next/static/chunks/2-3bcc782c_pu.js\u0022 async=\u0022\u0022\u003E\u003C/script\u003E\u003Cscript src=\u0022/_next/static/chunks/turbopack-2u1d16houkiyo.js\u0022 async=\u0022\u0022\u003E\u003C/script\u003E\u003Cscript src=\u0022/_next/static/chunks/0wj0noag-9_fs.js\u0022 async=\u0022\u0022\u003E\u003C/script\u003E\u003Cscript src=\u0022/_next/static/chunks/30cm2u8x3bt68.js\u0022 async=\u0022\u0022\u003E\u003C/script\u003E\u003Ctitle\u003E\uC81C9\uC138\uACC4 \uCE90\uB9AD\uD130 \uC544\uD2C0\uB77C\uC2A4\u003C/title\u003E\u003Cmeta name=\u0022description\u0022 content=\u0022\uB204\uBA54\uB124\uB77C \uCE90\uB9AD\uD130\uB97C \uB9CC\uB4E4\uACE0 \uBAA8\uD5D8 \uAE30\uB85D\uC744 \uAD00\uB9AC\uD558\uB294 \uBE44\uACF5\uC2DD \uD32C \uC81C\uC791 \uB3C4\uAD6C\u0022/\u003E\u003Clink rel=\u0022icon\u0022 href=\u0022/favicon.ico?favicon.117ezoe8m31dk.ico\u0022 sizes=\u002248x48\u0022 type=\u0022image/x-icon\u0022/\u003E\u003Cscript src=\u0022/_next/static/chunks/0cz1d0mv5g_q7.js\u0022 noModule=\u0022\u0022\u003E\u003C/script\u003E\u003C/head\u003E\u003Cbody\u003E\u003Cdiv hidden=\u0022\u0022\u003E\u003C!--$--\u003E\u003C!--/$--\u003E\u003C/div\u003E\u003C!--\u0026--\u003E\u003Cmain class=\u0022access-gate\u0022\u003E\u003Csection class=\u0022access-card\u0022\u003E\u003Cdiv class=\u0022access-mark\u0022\u003E\u2726\u003C/div\u003E\u003Cspan class=\u0022section-kicker\u0022\u003ENINTH WORLD \u00B7 PRIVATE\u003C/span\u003E\u003Cp class=\u0022access-message\u0022\u003E\uC0AC\uC774\uD2B8 \uC7A0\uAE08 \uC0C1\uD0DC\uB97C \uD655\uC778\uD558\uACE0 \uC788\uC2B5\uB2C8\uB2E4\u2026\u003C/p\u003E\u003C/section\u003E\u003C/main\u003E\u003C!--$--\u003E\u003C!--/$--\u003E\u003C!--/\u0026--\u003E\u003Cscript src=\u0022/_next/static/chunks/0j1we3cwg31qe.js\u0022 id=\u0022_R_\u0022 async=\u0022\u0022\u003E\u003C/script\u003E\u003Cscript\u003E(globalThis[\u0022TURBOPACK\u0022] || (globalThis[\u0022TURBOPACK\u0022] = [])).push({\u0022otherChunks\u0022:[\u0022static/chunks/0j1we3cwg31qe.js\u0022,\u0022static/chunks/374e0i9_p69m6.js\u0022,\u0022static/chunks/2-3bcc782c_pu.js\u0022],\u0022runtimeModuleIds\u0022:[94553]});\u003C/script\u003E\u003Cscript\u003E(self.__next_f=self.__next_f||[]).push([0])\u003C/script\u003E\u003Cscript\u003Eself.__next_f.push([1,\u00221:\\\u0022$Sreact.fragment\\\u0022\\n2:\\\u0022/_next/static/chunks/0wj0noag-9_fs.js\\\u0022\\n3:I[39756,[\\\u0022$2\\\u0022],\\\u0022default\\\u0022]\\n4:I[37457,[\\\u0022$2\\\u0022],\\\u0022default\\\u0022]\\n7:I[47257,[\\\u0022$2\\\u0022],\\\u0022ClientPageRoot\\\u0022]\\n8:\\\u0022/_next/static/chunks/30cm2u8x3bt68.js\\\u0022\\n9:I[31713,[\\\u0022$2\\\u0022,\\\u0022$8\\\u0022],\\\u0022default\\\u0022]\\na:I[97367,[\\\u0022$2\\\u0022],\\\u0022OutletBoundary\\\u0022]\\nb:\\\u0022$Sreact.suspense\\\u0022\\ne:\\\u0022ViewportBoundary\\\u0022\\nf:I[97367,[\\\u0022$2\\\u0022],\\\u0022$e\\\u0022]\\n11:\\\u0022MetadataBoundary\\\u0022\\n12:I[97367,[\\\u0022$2\\\u0022],\\\u0022$11\\\u0022]\\n15:I[68027,[\\\u0022$2\\\u0022],\\\u0022default\\\u0022,1]\\n:HL[\\\u0022/_next/static/chunks/0js5zapjpxyu6.css\\\u0022,\\\u0022style\\\u0022]\\n5:X\\nd:X\\n6:[[\\\u0022children\\\u0022,{\\\u0022s\\\u0022:\\\u0022__PAGE__\\\u0022,\\\u0022h\\\u0022:514,\\\u0022d\\\u0022:{\\\u0022r\\\u0022:[\\\u0022$\\\u0022,\\\u0022$1\\\u0022,\\\u0022c\\\u0022,{\\\u0022children\\\u0022:[[\\\u0022$\\\u0022,\\\u0022$L7\\\u0022,null,{\\\u0022Component\\\u0022:\\\u0022$9\\\u0022,\\\u0022serverProvidedParams\\\u0022:null}],[[\\\u0022$\\\u0022,\\\u0022script\\\u0022,\\\u0022script-0\\\u0022,{\\\u0022src\\\u0022:\\\u0022/_next/static/chunks/30cm2u8x3bt68.js\\\u0022,\\\u0022async\\\u0022:true,\\\u0022nonce\\\u0022:\\\u0022$undefined\\\u0022}]],[\\\u0022$\\\u0022,\\\u0022$La\\\u0022,null,{\\\u0022children\\\u0022:[\\\u0022$\\\u0022,\\\u0022$b\\\u0022,null,{\\\u0022name\\\u0022:\\\u0022Next.MetadataOutlet\\\u0022,\\\u0022children\\\u0022:\\\u0022$@c\\\u0022}]}]]}],\\\u0022p\\\u0022:true,\\\u0022v\\\u0022:\\\u0022$d\\\u0022}}]]\\n14:X\\n16:X\\n17:X\\n\u0022])\u003C/script\u003E\u003Cscript\u003Eself.__next_f.push([1,\u00220:{\\\u0022P\\\u0022:null,\\\u0022c\\\u0022:[\\\u0022\\\u0022,\\\u0022\\\u0022],\\\u0022q\\\u0022:\\\u0022\\\u0022,\\\u0022i\\\u0022:false,\\\u0022t\\\u0022:{\\\u0022t\\\u0022:{\\\u0022s\\\u0022:\\\u0022\\\u0022,\\\u0022h\\\u0022:530,\\\u0022d\\\u0022:{\\\u0022r\\\u0022:[\\\u0022$\\\u0022,\\\u0022$1\\\u0022,\\\u0022c\\\u0022,{\\\u0022children\\\u0022:[[[\\\u0022$\\\u0022,\\\u0022link\\\u0022,\\\u00220\\\u0022,{\\\u0022rel\\\u0022:\\\u0022stylesheet\\\u0022,\\\u0022href\\\u0022:\\\u0022/_next/static/chunks/0js5zapjpxyu6.css\\\u0022,\\\u0022precedence\\\u0022:\\\u0022next\\\u0022,\\\u0022crossOrigin\\\u0022:\\\u0022$undefined\\\u0022,\\\u0022nonce\\\u0022:\\\u0022$undefined\\\u0022}],[\\\u0022$\\\u0022,\\\u0022script\\\u0022,\\\u0022script-0\\\u0022,{\\\u0022src\\\u0022:\\\u0022/_next/static/chunks/0wj0noag-9_fs.js\\\u0022,\\\u0022async\\\u0022:true,\\\u0022nonce\\\u0022:\\\u0022$undefined\\\u0022}]],[\\\u0022$\\\u0022,\\\u0022html\\\u0022,null,{\\\u0022lang\\\u0022:\\\u0022ko\\\u0022,\\\u0022children\\\u0022:[\\\u0022$\\\u0022,\\\u0022body\\\u0022,null,{\\\u0022children\\\u0022:[\\\u0022$\\\u0022,\\\u0022$L3\\\u0022,null,{\\\u0022parallelRouterKey\\\u0022:\\\u0022children\\\u0022,\\\u0022error\\\u0022:\\\u0022$undefined\\\u0022,\\\u0022errorStyles\\\u0022:\\\u0022$undefined\\\u0022,\\\u0022errorScripts\\\u0022:\\\u0022$undefined\\\u0022,\\\u0022template\\\u0022:[\\\u0022$\\\u0022,\\\u0022$L4\\\u0022,null,{}],\\\u0022templateStyles\\\u0022:\\\u0022$undefined\\\u0022,\\\u0022templateScripts\\\u0022:\\\u0022$undefined\\\u0022,\\\u0022notFound\\\u0022:[[[\\\u0022$\\\u0022,\\\u0022title\\\u0022,null,{\\\u0022children\\\u0022:\\\u0022404: This page could not be found.\\\u0022}],[\\\u0022$\\\u0022,\\\u0022div\\\u0022,null,{\\\u0022style\\\u0022:{\\\u0022fontFamily\\\u0022:\\\u0022system-ui,\\\\\\\u0022Segoe UI\\\\\\\u0022,Roboto,Helvetica,Arial,sans-serif,\\\\\\\u0022Apple Color Emoji\\\\\\\u0022,\\\\\\\u0022Segoe UI Emoji\\\\\\\u0022\\\u0022,\\\u0022height\\\u0022:\\\u0022100vh\\\u0022,\\\u0022textAlign\\\u0022:\\\u0022center\\\u0022,\\\u0022display\\\u0022:\\\u0022flex\\\u0022,\\\u0022flexDirection\\\u0022:\\\u0022column\\\u0022,\\\u0022alignItems\\\u0022:\\\u0022center\\\u0022,\\\u0022justifyContent\\\u0022:\\\u0022center\\\u0022},\\\u0022children\\\u0022:[\\\u0022$\\\u0022,\\\u0022div\\\u0022,null,{\\\u0022children\\\u0022:[[\\\u0022$\\\u0022,\\\u0022style\\\u0022,null,{\\\u0022dangerouslySetInnerHTML\\\u0022:{\\\u0022__html\\\u0022:\\\u0022body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (pre\n\u2026[truncated]",
+        "durationMs": 2186
+      }
+    ],
+    "executions": [
+      {
+        "source": "production-build",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
+        "args": [
+          "run",
+          "build"
+        ],
+        "cwd": "D:\\00\uAD6C\uAE00\uB4DC\uB77C\uC774\uBE0C\\trpg\\TRPG\\\uB204\uBA54\uB124\uB77C\\\uB9CC\uB4DC\uB294 \uC0AC\uC774\uD2B8",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+        "nodeVersion": "v24.18.0",
+        "packageManager": "npm",
+        "packageManagerExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
+        "packageManagerVersion": "11.16.0",
+        "cleanup": {
+          "RootProcessId": 49748,
+          "Completed": true,
+          "ProcessesObserved": 21,
+          "ProcessesTerminated": 1,
+          "Failure": null
+        }
+      },
+      {
+        "source": "lint",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
+        "args": [
+          "run",
+          "lint"
+        ],
+        "cwd": "D:\\00\uAD6C\uAE00\uB4DC\uB77C\uC774\uBE0C\\trpg\\TRPG\\\uB204\uBA54\uB124\uB77C\\\uB9CC\uB4DC\uB294 \uC0AC\uC774\uD2B8",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+        "nodeVersion": "v24.18.0",
+        "packageManager": "npm",
+        "packageManagerExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
+        "packageManagerVersion": "11.16.0",
+        "cleanup": {
+          "RootProcessId": 37000,
+          "Completed": true,
+          "ProcessesObserved": 7,
+          "ProcessesTerminated": 1,
+          "Failure": null
+        }
+      },
+      {
+        "source": "tests-pass",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
+        "args": [
+          "test"
+        ],
+        "cwd": "D:\\00\uAD6C\uAE00\uB4DC\uB77C\uC774\uBE0C\\trpg\\TRPG\\\uB204\uBA54\uB124\uB77C\\\uB9CC\uB4DC\uB294 \uC0AC\uC774\uD2B8",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+        "nodeVersion": "v24.18.0",
+        "packageManager": "npm",
+        "packageManagerExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
+        "packageManagerVersion": "11.16.0",
+        "cleanup": {
+          "RootProcessId": 31332,
+          "Completed": true,
+          "ProcessesObserved": 11,
+          "ProcessesTerminated": 1,
+          "Failure": null
+        }
+      },
+      {
+        "source": "dev-server-home-200",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
+        "args": [
+          "run",
+          "start",
+          "--",
+          "--port",
+          "3100"
+        ],
+        "cwd": "D:\\00\uAD6C\uAE00\uB4DC\uB77C\uC774\uBE0C\\trpg\\TRPG\\\uB204\uBA54\uB124\uB77C\\\uB9CC\uB4DC\uB294 \uC0AC\uC774\uD2B8",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+        "nodeVersion": "v24.18.0",
+        "packageManager": "npm",
+        "packageManagerExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
+        "packageManagerVersion": "11.16.0",
+        "cleanup": {
+          "RootProcessId": 45940,
+          "Completed": true,
+          "ProcessesObserved": 7,
+          "ProcessesTerminated": 5,
+          "Failure": null
+        }
+      }
+    ]
+  }
+}
