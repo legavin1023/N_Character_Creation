@@ -17,6 +17,9 @@ interface AppsScriptResponse {
   count?: number;
 }
 
+const MAX_REQUEST_BYTES = 10_000_000;
+const MAX_PORTRAIT_LENGTH = 3_000_000;
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -26,7 +29,12 @@ function isCharacterList(value: unknown): value is Record<string, unknown>[] {
     isRecord(character) &&
     typeof character.id === "string" &&
     typeof character.name === "string" &&
-    typeof character.updatedAt === "string",
+    typeof character.updatedAt === "string" &&
+    (character.portrait === undefined ||
+      (typeof character.portrait === "string" &&
+        character.portrait.startsWith("data:image/") &&
+        character.portrait.length <= MAX_PORTRAIT_LENGTH)) &&
+    (character.portraitFileId === undefined || typeof character.portraitFileId === "string"),
   );
 }
 
@@ -58,7 +66,7 @@ export async function POST(request: Request) {
   let body: unknown;
   try {
     const rawBody = await request.text();
-    if (rawBody.length > 2_000_000) {
+    if (rawBody.length > MAX_REQUEST_BYTES) {
       return Response.json({ error: "요청 데이터가 너무 큽니다." }, { status: 413 });
     }
     body = JSON.parse(rawBody);

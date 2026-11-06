@@ -629,7 +629,7 @@ export default function Home() {
     }));
   }
 
-  function uploadPortrait(character: Character, event: ChangeEvent<HTMLInputElement>) {
+  async function uploadPortrait(character: Character, event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
@@ -640,22 +640,19 @@ export default function Home() {
       setNotice("초상화 파일은 2MB 이하로 선택해 주세요.");
       return;
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      const portrait = reader.result;
-      if (typeof portrait !== "string") {
-        setNotice("초상화 파일을 읽지 못했습니다.");
-        return;
-      }
+    try {
+      const portrait = await resizePortrait(file);
       updateCharacter(character.id, (current) => ({
         ...current,
         portrait,
+        portraitFileId: undefined,
       }));
-      setNotice("초상화를 저장했습니다.");
-    };
-    reader.onerror = () => setNotice("초상화 파일을 읽지 못했습니다.");
-    reader.readAsDataURL(file);
-    event.target.value = "";
+      setNotice("초상화를 저장했습니다. Google Sheets 서버 저장 시 함께 백업됩니다.");
+    } catch {
+      setNotice("초상화 파일을 읽지 못했습니다.");
+    } finally {
+      event.target.value = "";
+    }
   }
 
   const navItems: { id: View; label: string; icon: Parameters<typeof Icon>[0]["name"] }[] = [
@@ -1042,6 +1039,31 @@ export default function Home() {
       <input ref={importInput} className="sr-only" type="file" accept="application/json,.json" onChange={importJson} />
     </div>
   );
+}
+
+async function resizePortrait(file: File): Promise<string> {
+  const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const objectUrl = URL.createObjectURL(file);
+    const preview = new Image();
+    preview.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve(preview);
+    };
+    preview.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("이미지를 읽을 수 없습니다."));
+    };
+    preview.src = objectUrl;
+  });
+  const maximumSize = 800;
+  const scale = Math.min(1, maximumSize / Math.max(image.naturalWidth, image.naturalHeight));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+  canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+  const context = canvas.getContext("2d");
+  if (!context) throw new Error("이미지를 처리할 수 없습니다.");
+  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+  return canvas.toDataURL("image/jpeg", 0.86);
 }
 
 function CharacterCard({

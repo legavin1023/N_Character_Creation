@@ -16,17 +16,12 @@ async function requestServer(
   action: SyncAction,
   characters?: Character[],
 ): Promise<SyncResponse> {
-  const serverCharacters = characters?.map((character) => {
-    const storedCharacter = { ...character };
-    delete storedCharacter.portrait;
-    return storedCharacter;
-  });
   const response = await fetch("/api/google-sheets", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       action,
-      ...(serverCharacters ? { characters: serverCharacters } : {}),
+      ...(characters ? { characters } : {}),
     }),
     cache: "no-store",
   });

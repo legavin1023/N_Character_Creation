@@ -79,6 +79,7 @@ export interface Character {
   name: string;
   playerName: string;
   portrait?: string;
+  portraitFileId?: string;
   ruleSet: RuleSet;
   type: string;
   descriptor: string;
