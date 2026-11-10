@@ -1,5 +1,15 @@
 const SHEET_NAME = "캐릭터";
-const HEADERS = ["id", "updatedAt", "이름", "캐릭터 JSON"];
+// The first four columns are kept in their original order so existing sheets
+// remain readable. The following columns make the same character data visible
+// and editable-at-a-glance, while the JSON remains the lossless source of truth.
+const HEADERS = [
+  "id", "updatedAt", "이름", "캐릭터 JSON",
+  "플레이어", "생성일", "규칙", "수식어", "유형", "특징", "등급", "XP", "분발", "쉰",
+  "힘 현재", "힘 최대", "힘 재능", "속력 현재", "속력 최대", "속력 재능", "지성 현재", "지성 최대", "지성 재능",
+  "기능", "특수 능력", "장비", "사이퍼", "사이퍼 한도", "공격", "아티팩트", "신기품",
+  "방어구", "회복", "성장", "피해 상태", "초상화 파일 ID",
+  "출신", "외형", "성격", "이력", "동기", "목표", "비밀", "관계", "메모"
+];
 const MAX_CELL_LENGTH = 45000;
 const PORTRAIT_FOLDER_NAME = "누메네라 캐릭터 초상화";
 
@@ -44,7 +54,17 @@ function authorizeSpreadsheetAccess() {
 
 function getCharacterSheet(spreadsheetId) {
   const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
-  return spreadsheet.getSheetByName(SHEET_NAME) || spreadsheet.insertSheet(SHEET_NAME);
+  const sheet = spreadsheet.getSheetByName(SHEET_NAME) || spreadsheet.insertSheet(SHEET_NAME);
+  ensureHeaders(sheet);
+  return sheet;
+}
+
+function ensureHeaders(sheet) {
+  const existing = sheet.getLastRow() > 0
+    ? sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), 4)).getDisplayValues()[0]
+    : [];
+  const currentHeaders = HEADERS.map((header, index) => existing[index] || header);
+  sheet.getRange(1, 1, 1, HEADERS.length).setValues([currentHeaders]);
 }
 
 function readCharacters(sheet) {
@@ -88,12 +108,10 @@ function upsertCharacters(sheet, characters) {
     if (rawCharacter.length > MAX_CELL_LENGTH) {
       throw new Error(`“${character.name}”의 데이터가 Google Sheets 셀 크기를 초과합니다.`);
     }
-    return [character.id, character.updatedAt, character.name, rawCharacter];
+    return characterToRow(character, storedCharacter, rawCharacter);
   });
 
-  if (sheet.getLastRow() === 0) {
-    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
-  }
+  ensureHeaders(sheet);
 
   const lastRow = sheet.getLastRow();
   const storedRows = lastRow < 2
@@ -131,6 +149,25 @@ function upsertCharacters(sheet, characters) {
     range.setNumberFormat("@");
     range.setValues(additionRows);
   }
+}
+
+function characterToRow(character, storedCharacter, rawCharacter) {
+  const stat = (key, field) => Number(character.stats && character.stats[key] && character.stats[key][field]) || 0;
+  const background = character.background || {};
+  const list = (items) => Array.isArray(items) ? items.map(item => JSON.stringify(item)).join("\n") : "";
+  const skills = Array.isArray(character.skills)
+    ? character.skills.map(skill => `${skill.name || ""} · ${skill.level || ""}${skill.note ? ` · ${skill.note}` : ""}`).join("\n")
+    : "";
+  const armor = character.armor || {};
+  const recovery = character.recovery || {};
+  return [
+    character.id, character.updatedAt, character.name, rawCharacter,
+    character.playerName || "", character.createdAt || "", character.ruleSet || "", character.descriptor || "", character.type || "", character.focus || "", character.tier || 0, character.xp || 0, character.effort || 0, character.shins || 0,
+    stat("might", "current"), stat("might", "max"), stat("might", "edge"), stat("speed", "current"), stat("speed", "max"), stat("speed", "edge"), stat("intellect", "current"), stat("intellect", "max"), stat("intellect", "edge"),
+    skills, list(character.abilities), list(character.equipment), list(character.cyphers), character.cypherLimit || 0, list(character.attacks), list(character.artifacts), list(character.oddities),
+    JSON.stringify(armor), JSON.stringify(recovery), list(character.advancements), character.damageState || "", storedCharacter.portraitFileId || "",
+    background.origin || "", background.appearance || "", background.personality || "", background.history || "", background.motivation || "", background.goal || "", background.secret || "", background.connections || "", character.notes || ""
+  ];
 }
 
 function storePortrait(character) {

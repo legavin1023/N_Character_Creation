@@ -547,7 +547,12 @@ export default function Home() {
       setCharacters((current) => [...normalized, ...current]);
       setSelectedId(normalized[0].id);
       setView("sheet");
-      setNotice(`${normalized.length}개 캐릭터를 가져왔습니다.`);
+      try {
+        await saveCharactersToGoogleSheet(normalized);
+        setNotice(`${normalized.length}개 캐릭터를 가져와 Google Sheets에도 저장했습니다.`);
+      } catch (syncError) {
+        setNotice(`${normalized.length}개 캐릭터를 가져왔습니다. Google Sheets 저장은 실패했습니다: ${syncError instanceof Error ? syncError.message : "서버 연결을 확인해 주세요."}`);
+      }
     } catch (error) {
       setNotice(error instanceof Error ? error.message : "JSON 파일을 읽지 못했습니다.");
     } finally {
@@ -1865,7 +1870,7 @@ function GoogleSheetsSettings({
       </div>
       <div className="settings-caution">
         <Icon name="shield" size={16} />
-        <span>이름이 같은 캐릭터만 갱신하고, 다른 캐릭터는 시트에 추가합니다. 로그인 보호가 없으므로 공개 사이트에서는 방문자가 저장·불러오기를 사용할 수 있습니다. 초상화 이미지는 서버에 저장하지 않습니다.</span>
+        <span>이름이 같은 캐릭터만 갱신하고, 다른 캐릭터는 시트에 추가합니다. 시트에는 전체 JSON 백업과 함께 능력치·기능·장비·배경 등 항목별 열도 기록됩니다. JSON 가져오기 후에도 자동으로 시트에 저장됩니다.</span>
       </div>
     </div>
   );
