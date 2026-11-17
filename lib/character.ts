@@ -461,6 +461,15 @@ export function getCharacterIdentity(character: Character): string {
 
 export function getAbilityCategory(type: string): { ko: string; en: string } {
   const normalized = type.trim().toLocaleLowerCase();
+  if (normalized.includes("델브") || normalized.includes("delve")) {
+    return { ko: "탐사 능력", en: "DELVE ABILITIES" };
+  }
+  if (normalized.includes("라이트") || normalized.includes("wright")) {
+    return { ko: "발명 능력", en: "WRIGHT ABILITIES" };
+  }
+  if (normalized.includes("아르쿠스") || normalized.includes("arkus")) {
+    return { ko: "지침", en: "PRECEPTS" };
+  }
   if (normalized.includes("나노") || normalized.includes("nano")) {
     return { ko: "에소테리", en: "ESOTERIES" };
   }

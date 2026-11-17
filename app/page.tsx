@@ -1024,8 +1024,32 @@ export default function Home() {
             </select>
             <div className="form-two-col">
               <div>
-                <label className="field-label" htmlFor="character-type">유형 <small>직접 입력</small></label>
-                <input id="character-type" className="text-input" maxLength={60} placeholder="유형 입력" value={newCharacter.type} onChange={(event) => setNewCharacter((current) => ({ ...current, type: event.target.value }))} />
+                <label className="field-label" htmlFor="character-type">유형 <small>목록에서 선택 또는 직접 입력</small></label>
+                <input
+                  id="character-type"
+                  className="text-input"
+                  list="character-type-options"
+                  maxLength={60}
+                  placeholder="유형 선택 또는 입력"
+                  value={newCharacter.type}
+                  onChange={(event) => {
+                    const type = event.target.value;
+                    const destinyType = ["델브", "라이트", "아르쿠스", "delve", "wright", "arkus"].includes(type.trim().toLocaleLowerCase());
+                    setNewCharacter((current) => ({
+                      ...current,
+                      type,
+                      ruleSet: destinyType && current.ruleSet === "discovery" ? "discovery-destiny" : current.ruleSet,
+                    }));
+                  }}
+                />
+                <datalist id="character-type-options">
+                  <option value="글레이브" />
+                  <option value="나노" />
+                  <option value="잭" />
+                  <option value="델브" />
+                  <option value="라이트" />
+                  <option value="아르쿠스" />
+                </datalist>
               </div>
               <div>
                 <label className="field-label" htmlFor="character-descriptor">수식어 <small>직접 입력</small></label>
@@ -1750,6 +1774,8 @@ function RulesView() {
         ["Focus", "특징"],
         ["Glaive · Nano · Jack", "글레이브 · 나노 · 잭"],
         ["Esoteries · Combat Tricks · Tricks", "에소테리 · 전투술 · 재간"],
+        ["Delve · Wright · Arkus", "델브 · 라이트 · 아르쿠스"],
+        ["Delve Abilities · Wright Abilities · Precepts", "탐사 능력 · 발명 능력 · 지침"],
       ],
     },
     {
