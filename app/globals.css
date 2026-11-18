@@ -2414,6 +2414,25 @@ button:disabled {
   text-align: right;
 }
 
+.advancement-cancel {
+  width: 100%;
+  min-height: 28px;
+  margin: 2px 0 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 8px;
+  cursor: pointer;
+}
+
+.advancement-cancel:hover {
+  border-color: var(--ink-soft);
+  background: var(--paper-deep);
+  color: var(--ink);
+}
+
 .advancement-form {
   display: grid;
   gap: 7px;

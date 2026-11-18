@@ -62,6 +62,8 @@ export interface Advancement {
   detail: string;
   target?: StatKey;
   skillId?: string;
+  poolPoints?: Partial<Record<StatKey, number>>;
+  skillLevelBefore?: SkillLevel;
   xpCost: number;
   completedAt: string;
 }
@@ -319,7 +321,15 @@ function isValidAdvancements(value: unknown): boolean {
         typeof item.completedAt === "string" &&
         (item.target === undefined ||
           STAT_KEYS.includes(item.target as StatKey)) &&
-        (item.skillId === undefined || typeof item.skillId === "string"),
+        (item.skillId === undefined || typeof item.skillId === "string") &&
+        (item.poolPoints === undefined ||
+          (isRecord(item.poolPoints) &&
+            STAT_KEYS.every((key) => {
+              const points = item.poolPoints as Record<string, unknown>;
+              return points[key] === undefined || isNonNegativeInteger(points[key]);
+            }))) &&
+        (item.skillLevelBefore === undefined ||
+          ["inability", "untrained", "trained", "specialized"].includes(String(item.skillLevelBefore))),
     )
   );
 }

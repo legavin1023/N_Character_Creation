@@ -150,7 +150,6 @@ function upsertCharacters(sheet, characters) {
     range.setValues(additionRows);
   }
 }
-
 function characterToRow(character, storedCharacter, rawCharacter) {
   const stat = (key, field) => Number(character.stats && character.stats[key] && character.stats[key][field]) || 0;
   const background = character.background || {};

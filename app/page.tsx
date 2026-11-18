@@ -1543,6 +1543,7 @@ function AdvancementPanel({
   const [skillId, setSkillId] = useState("");
   const [otherDetail, setOtherDetail] = useState("");
   const tierAdvancements = character.advancements.filter((entry) => entry.tier === character.tier);
+  const latestAdvancement = character.advancements.at(-1);
   const completedChoices = new Set(tierAdvancements.map((entry) => entry.choice));
   const remainingSlots = Math.max(0, 4 - tierAdvancements.length);
   const skillOptions = character.skills.filter((skill) => skill.level !== "specialized");
@@ -1565,6 +1566,8 @@ function AdvancementPanel({
     let detail = "";
     let target: StatKey | undefined;
     let selectedSkillId: string | undefined;
+    let selectedSkillLevel: Advancement["skillLevelBefore"];
+    let selectedPoolPoints: Advancement["poolPoints"];
     let updatedStats = character.stats;
     let effort = character.effort;
 
@@ -1583,6 +1586,7 @@ function AdvancementPanel({
         speed: { ...character.stats.speed, max: character.stats.speed.max + points.speed },
         intellect: { ...character.stats.intellect, max: character.stats.intellect.max + points.intellect },
       };
+      selectedPoolPoints = points;
       detail = STAT_KEYS.filter((key) => points[key] > 0)
         .map((key) => `${STAT_LABELS[key].ko} +${points[key]}`)
         .join(", ");
@@ -1603,6 +1607,7 @@ function AdvancementPanel({
         return;
       }
       selectedSkillId = skill.id;
+      selectedSkillLevel = skill.level;
       detail = skill.level === "trained"
         ? `${skill.name}: 익숙함 → 능숙함`
         : `${skill.name}: ${SKILL_LEVEL_LABELS[skill.level]} → 익숙함`;
@@ -1621,6 +1626,8 @@ function AdvancementPanel({
       detail,
       target,
       skillId: selectedSkillId,
+      poolPoints: selectedPoolPoints,
+      skillLevelBefore: selectedSkillLevel,
       xpCost: 4,
       completedAt: new Date().toISOString(),
     };
@@ -1646,6 +1653,59 @@ function AdvancementPanel({
     setNotice(`성장 선택을 완료해 ${character.tier + 1}등급이 되었습니다.`);
   }
 
+  function cancelLatestAdvancement() {
+    if (!latestAdvancement) return;
+    const cancelled = latestAdvancement;
+    updateCharacter(character.id, (current) => {
+      const entry = current.advancements.find((item) => item.id === cancelled.id);
+      if (!entry) return current;
+
+      let stats = current.stats;
+      let effort = current.effort;
+      let skills = current.skills;
+
+      if (entry.choice === "pool") {
+        const poolPoints = entry.poolPoints ?? (Object.fromEntries(
+          STAT_KEYS.map((key) => {
+            const match = entry.detail.match(new RegExp(`${STAT_LABELS[key].ko} \\+(\\d+)`));
+            return [key, match ? Number(match[1]) : 0];
+          }),
+        ) as Record<StatKey, number>);
+        stats = {
+          ...stats,
+          ...Object.fromEntries(STAT_KEYS.map((key) => [
+            key,
+            { ...stats[key], max: Math.max(0, stats[key].max - (poolPoints[key] ?? 0)) },
+          ])),
+        };
+      } else if (entry.choice === "edge" && entry.target) {
+        stats = {
+          ...stats,
+          [entry.target]: { ...stats[entry.target], edge: Math.max(0, stats[entry.target].edge - 1) },
+        };
+      } else if (entry.choice === "effort") {
+        effort = Math.max(0, effort - 1);
+      } else if (entry.choice === "skill" && entry.skillId) {
+        skills = skills.map((skill) => skill.id === entry.skillId
+          ? { ...skill, level: entry.skillLevelBefore ?? (skill.level === "specialized" ? "trained" : "untrained") }
+          : skill);
+      }
+
+      const remainingAdvancements = current.advancements.filter((item) => item.id !== entry.id);
+      const hasCurrentTierAdvancement = remainingAdvancements.some((item) => item.tier === current.tier);
+      return {
+        ...current,
+        xp: current.xp + entry.xpCost,
+        stats,
+        effort,
+        skills,
+        advancements: remainingAdvancements,
+        tier: current.tier > entry.tier && !hasCurrentTierAdvancement ? entry.tier : current.tier,
+      };
+    });
+    setNotice(`${ADVANCEMENT_CHOICES.find((option) => option.id === cancelled.choice)?.label} 성장을 취소했습니다 · ${cancelled.xpCost} XP 반환`);
+  }
+
   return (
     <ContentCard title="등급 성장" english="ADVANCEMENT · 4 XP EACH" count={tierAdvancements.length} icon="spark">
       <p className="helper-text">각 선택은 4 XP를 사용합니다. 현재 등급에서 성장 선택 4개를 완료하면 다음 등급으로 올라갈 수 있습니다.</p>
@@ -1663,6 +1723,11 @@ function AdvancementPanel({
             </div>
           ))}
         </div>
+      )}
+      {latestAdvancement && (
+        <button className="advancement-cancel" type="button" onClick={cancelLatestAdvancement}>
+          마지막 성장 취소 · {ADVANCEMENT_CHOICES.find((option) => option.id === latestAdvancement.choice)?.label}
+        </button>
       )}
       {remainingSlots > 0 ? (
         <form className="advancement-form" onSubmit={addAdvancement}>
